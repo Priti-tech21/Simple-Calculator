@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Calculator</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial;
+      background: linear-gradient(135deg, #e0c3fc, #8ec5fc);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #fff;
+      padding: 25px;
+      width: 330px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    h2 {
+      color: #444;
+      margin-bottom: 20px;
+    }
+
+    .inputs input {
+      width: 90%;
+      padding: 8px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      background: #8ec5fc;
+      border: none;
+      padding: 10px 14px;
+      margin: 6px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #5aa0f2;
+      color: white;
+    }
+
+    #result {
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Smart Calculator</h2>
+    <div class="inputs" id="inputs">
+      <input type="number" placeholder="Enter number">
+    </div>
+
+    <button onclick="addInput()">➕ Add Number</button>
+    <br>
+    <button onclick="calculate('add')">Add</button>
+    <button onclick="calculate('sub')">Subtract</button>
+    <button onclick="calculate('mul')">Multiply</button>
+    <button onclick="calculate('div')">Divide</button>
+    <button onclick="clearInputs()">Clear All</button>
+
+    <div id="result">Result: -</div>
+  </div>
+
+  <script>
+    function addInput() {
+      const inputDiv = document.getElementById('inputs');
+      const input = document.createElement('input');
+      input.type = 'number';
+      input.placeholder = 'Enter number';
+      inputDiv.appendChild(input);
+    }
+
+    function clearInputs() {
+      document.getElementById('inputs').innerHTML = '<input type="number" placeholder="Enter number">';
+      document.getElementById('result').innerHTML = 'Result: -';
+    }
+
+    function calculate(operation) {
+      const inputs = document.querySelectorAll('#inputs input');
+      let values = [];
+      inputs.forEach(inp => {
+        const val = parseFloat(inp.value);
+        if (!isNaN(val)) values.push(val);
+      });
+
+      if (values.length === 0) {
+        document.getElementById('result').innerHTML = 'Result: Please enter numbers!';
+        return;
+      }
+
+      let result = values[0];
+      for (let i = 1; i < values.length; i++) {
+        if (operation === 'add') result += values[i];
+        else if (operation === 'sub') result -= values[i];
+        else if (operation === 'mul') result *= values[i];
+        else if (operation === 'div') result /= values[i];
+      }
+
+      document.getElementById('result').innerHTML = `Result: ${result}`;
+    }
+  </script>
+</body>
+</html>
